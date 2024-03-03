@@ -1,24 +1,16 @@
 import { url_categories, url_products, options_products } from "./apis";
-import { Category } from "./classes/Category";
+import { createCard, createOptionTag } from "./utils";
 import { Product } from "./classes/Product";
 import "./style.css";
 
 const selector = document.querySelector("#select-categories");
 const cardContainer = document.querySelector(".card_container");
 
-const createOptionTag = (category) => {
-  let option = document.createElement("option");
-  let categoryClass = new Category(category.CatName, category.CategoryValue);
-  option.textContent = categoryClass.catName;
-  option.value = categoryClass.catValue;
-  selector.appendChild(option);
-};
-
 const getCategories = async () => {
   const responseCategories = await fetch(url_categories);
   const dataCategories = await responseCategories.json();
   dataCategories.forEach((category) => {
-    createOptionTag(category);
+    createOptionTag(selector, category);
   });
 };
 
@@ -31,7 +23,7 @@ selector.addEventListener("change", async (event) => {
   const dataProducts = await responseProducts.json();
   const products = await parseToProductClass(dataProducts.results);
   products.forEach((product) => {
-    createCard(product);
+    createCard(cardContainer, product);
   });
 });
 
@@ -54,23 +46,4 @@ export const parseToProductClass = (literalProductObject) => {
       resolve(literalProductArray);
     }
   });
-};
-
-const createCard = (product) => {
-  const cardDiv = document.createElement("div");
-  const textDiv = document.createElement("div");
-  const p_product_name = document.createElement("p");
-  p_product_name.textContent = product.name;
-  const span_product_price = document.createElement("span");
-  span_product_price.textContent = product.price;
-  cardDiv.className = "card";
-  textDiv.className = "card_text";
-  const img = document.createElement("img");
-  img.src = product.imgUrl;
-  img.alt = " Image not found";
-  cardDiv.appendChild(img);
-  textDiv.appendChild(p_product_name);
-  textDiv.appendChild(span_product_price);
-  cardDiv.appendChild(textDiv);
-  cardContainer.appendChild(cardDiv);
 };
