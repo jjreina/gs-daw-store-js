@@ -7,24 +7,32 @@ const selector = document.querySelector("#select-categories");
 const cardContainer = document.querySelector(".card_container");
 
 const getCategories = async () => {
-  const responseCategories = await fetch(url_categories);
-  const dataCategories = await responseCategories.json();
-  dataCategories.forEach((category) => {
-    createOptionTag(selector, category);
-  });
+  try {
+    const responseCategories = await fetch(url_categories);
+    const dataCategories = await responseCategories.json();
+    dataCategories.forEach((category) => {
+      createOptionTag(selector, category);
+    });
+  } catch (error) {
+    console.error(new Error(error));
+  }
 };
 
 selector.addEventListener("change", async (event) => {
-  cardContainer.textContent = "";
-  const responseProducts = await fetch(
-    url_products + event.target.value,
-    options_products
-  );
-  const dataProducts = await responseProducts.json();
-  const products = await parseToProductClass(dataProducts.results);
-  products.forEach((product) => {
-    createCard(cardContainer, product);
-  });
+  try {
+    cardContainer.textContent = "";
+    const responseProducts = await fetch(
+      url_products + event.target.value,
+      options_products
+    );
+    const dataProducts = await responseProducts.json();
+    const products = await parseToProductClass(dataProducts.results);
+    products.forEach((product) => {
+      createCard(cardContainer, product);
+    });
+  } catch (error) {
+    console.error(new Error(error));
+  }
 });
 
 getCategories();
