@@ -1,4 +1,4 @@
-import { Category } from "./classes/Category";
+import { Category } from "../classes/Category";
 
 export const createCard = (cardContainer, product) => {
   const cardDiv = document.createElement("div");
