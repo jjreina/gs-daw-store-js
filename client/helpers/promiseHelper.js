@@ -5,7 +5,7 @@ const ERROR_MESSAGE = "is not ok";
 export const parseToProductClass = (literalProductObject) => {
   return new Promise((resolve, reject) => {
     if (literalProductObject === null || literalProductObject === undefined) {
-      reject(`${literalProductObject} ${ERROR_MESSAGE}`);
+      reject(new Error(`${literalProductObject} ${ERROR_MESSAGE}`));
     } else {
       let literalProductArray = literalProductObject.map((element) => {
         let product = new Product();

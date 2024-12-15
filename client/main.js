@@ -32,7 +32,7 @@ selector.addEventListener("change", async (event) => {
       createCard(cardContainer, product);
     });
   } catch (error) {
-    console.error(new Error(error));
+    console.error(error);
   }
 });
 
