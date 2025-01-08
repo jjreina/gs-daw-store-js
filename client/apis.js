@@ -1,4 +1,3 @@
-// export const url_categories = "https://apimocha.com/jjreina/categories";
 export const url_categories = "http://localhost:3000/categories";
 
 const default_laguage_code = "es";
